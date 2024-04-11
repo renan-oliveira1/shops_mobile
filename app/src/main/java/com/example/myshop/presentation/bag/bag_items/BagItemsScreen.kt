@@ -48,6 +48,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.myshop.presentation.bag.bag_items.components.ItemInBag
 import com.example.myshop.presentation.util.Screen
+import com.example.myshop.ui.theme.Blue
+import com.example.myshop.ui.theme.BlueDarker
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,7 +87,7 @@ fun BagItemsScreen(
             },
             modifier = Modifier.background(MaterialTheme.colorScheme.primary),
             colors = TopAppBarDefaults.mediumTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary
+                BlueDarker
             )
 
         )},
@@ -93,7 +95,8 @@ fun BagItemsScreen(
             FloatingActionButton(
                 onClick = {
                     showDialog = true
-                }
+                },
+                contentColor = Blue
             ) {
                 Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Add shop")
             }
@@ -181,6 +184,7 @@ fun BagItemsScreen(
                                 },
                                 confirmButton = {
                                     Button(
+                                        modifier = Modifier.background(Blue),
                                         onClick = {
                                             bagItemsViewModel.save(itemName, itemPrice, itemQuantity, idItemUpdate)
                                             itemName = ""
@@ -194,6 +198,7 @@ fun BagItemsScreen(
                                 },
                                 dismissButton = {
                                     Button(
+                                        modifier = Modifier.background(Blue),
                                         onClick = {
                                             showDialog = false
                                         }
@@ -210,7 +215,7 @@ fun BagItemsScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
+                    .background(Blue)
             ){
                 Text(
                     text = "Total Value: ${String.format("%.2f", stateTotalValue)}",

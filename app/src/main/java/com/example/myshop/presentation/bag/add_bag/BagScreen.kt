@@ -1,6 +1,7 @@
 package com.example.myshop.presentation.bag.add_bag
 
 import android.annotation.SuppressLint
+import android.content.res.Resources.Theme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -37,6 +39,7 @@ import androidx.navigation.NavController
 
 import com.example.myshop.presentation.bag.add_bag.components.BagItem
 import com.example.myshop.presentation.util.Screen
+import com.example.myshop.ui.theme.Blue
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -56,7 +59,8 @@ fun BagScreen(
             FloatingActionButton(
                 onClick = {
                     showDialog = true
-                }
+                },
+                containerColor = Blue
             ) {
                Icon(imageVector = Icons.Default.Add, contentDescription = "Add shop")
             }
