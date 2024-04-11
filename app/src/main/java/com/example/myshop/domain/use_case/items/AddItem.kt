@@ -8,10 +8,6 @@ class AddItem(
     private val itemRepository: ItemRepository
 ) {
     suspend operator fun invoke(item: Item){
-        try {
-            itemRepository.save(item)
-        }catch (e: Exception){
-            var i = 0
-        }
+        itemRepository.save(item)
     }
 }
