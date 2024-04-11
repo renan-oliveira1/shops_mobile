@@ -76,8 +76,6 @@ class BagItemsViewModel @Inject constructor(
     }
 
     fun save(name: String, price: String, quantity: String, idItem: Int?){
-        val idItemAddOrUpdate: Int = idItem ?: stateBag.value!!.id!!
-
         val item = Item(name = name, quantity = quantity.toInt(), price = price.toDouble(), bagId = stateBag.value!!.id!!, id = idItem)
         viewModelScope.launch {
             itemsUseCases.addItem(item)
