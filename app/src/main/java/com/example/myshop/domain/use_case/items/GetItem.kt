@@ -6,7 +6,7 @@ import com.example.myshop.domain.repository.ItemRepository
 class GetItem(
     private val itemRepository: ItemRepository
 ) {
-    suspend fun invoke(id: Int): Item? {
+    suspend operator fun invoke(id: Int): Item? {
         return itemRepository.findOne(id)
     }
 }
