@@ -1,7 +1,9 @@
 package com.example.myshop.presentation.bag.bag_items
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +28,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,8 +44,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -76,13 +81,17 @@ fun BagItemsScreen(
         snackbarHost = { SnackbarHost(hostState = scaffoldState)},
         topBar = { TopAppBar(
             title = {
-                if (stateBag != null) {
-                    Text(text = stateBag.title)
+                Row (
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    if (stateBag != null) {
+                        Text(text = stateBag.title, color = Color.White, fontWeight = FontWeight.Bold)
+                    }
                 }
             },
             navigationIcon = {
                 IconButton(onClick = { navController.navigate(Screen.BagScreen.route)}) {
-                    Icon(Icons.Filled.ArrowBack, "backIcon")
+                    Icon(Icons.Filled.ArrowBack, "backIcon", tint = Color.White)
                 }
             },
             modifier = Modifier.background(MaterialTheme.colorScheme.primary),
@@ -96,7 +105,7 @@ fun BagItemsScreen(
                 onClick = {
                     showDialog = true
                 },
-                contentColor = Blue
+                containerColor = Blue
             ) {
                 Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Add shop")
             }
@@ -184,24 +193,24 @@ fun BagItemsScreen(
                                 },
                                 confirmButton = {
                                     Button(
-                                        modifier = Modifier.background(Blue),
                                         onClick = {
                                             bagItemsViewModel.save(itemName, itemPrice, itemQuantity, idItemUpdate)
                                             itemName = ""
                                             itemPrice = ""
                                             itemQuantity = ""
                                             showDialog = false
-                                        }
+                                        },
+                                        colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = Color.White)
                                     ) {
                                         Text("Confirm")
                                     }
                                 },
                                 dismissButton = {
                                     Button(
-                                        modifier = Modifier.background(Blue),
                                         onClick = {
                                             showDialog = false
-                                        }
+                                        },
+                                        colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = Color.White)
                                     ) {
                                         Text("Cancel")
                                     }
@@ -216,6 +225,8 @@ fun BagItemsScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Blue)
+                    .border(BorderStroke(1.dp, Color.White))
+
             ){
                 Text(
                     text = "Total Value: ${String.format("%.2f", stateTotalValue)}",
