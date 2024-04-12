@@ -7,12 +7,17 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myshop.domain.model.Bag
+import com.example.myshop.domain.model.InvalidItemException
 import com.example.myshop.domain.model.Item
 import com.example.myshop.domain.use_case.bag.BagUseCases
 import com.example.myshop.domain.use_case.items.ItemUseCases
 import com.example.myshop.presentation.bag.add_bag.BagsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -37,6 +42,9 @@ class BagItemsViewModel @Inject constructor(
     private var recentlyDeletedItem: Item? = null
 
     private var getShopsJob: Job? = null
+
+    private val _showMessageSnackBar = MutableSharedFlow<ShowSnackbarEvent>()
+    val showMessageSnackBar = _showMessageSnackBar.asSharedFlow()
 
     init{
         savedStateHandle.get<Int>("bagId")?.let { bagId ->
@@ -72,18 +80,21 @@ class BagItemsViewModel @Inject constructor(
                     recentlyDeletedItem?.let { itemsUseCases.addItem(it) }
                 }
             }
+            is ItemEvent.SaveItem -> {
+                val item = Item(name = itemEvent.name, price = itemEvent.price.toDouble(), quantity = itemEvent.quantity.toInt(), id = itemEvent.idItem, bagId =_stateBag.value!!.id!!)
+                viewModelScope.launch {
+                    try{
+                        itemsUseCases.addItem(item)
+                        getItems()
+                    }catch (exception: InvalidItemException){
+                        _showMessageSnackBar.emit(ShowSnackbarEvent(exception.message ?: "Error" ))
+                    }
+                }
+            }
         }
     }
 
-    fun save(name: String, price: String, quantity: String, idItem: Int?){
-        val item = Item(name = name, quantity = quantity.toInt(), price = price.toDouble(), bagId = stateBag.value!!.id!!, id = idItem)
-        viewModelScope.launch {
-            itemsUseCases.addItem(item)
-            getItems()
-        }
-    }
-
-    fun getItems(){
+    private fun getItems(){
         getShopsJob?.cancel()
         getShopsJob = viewModelScope.launch {
             itemsUseCases.getItemsBag(_stateBag.value!!.id!!)
@@ -102,4 +113,6 @@ class BagItemsViewModel @Inject constructor(
         }
         _stateTotalValue.doubleValue = sum
     }
+
+    data class ShowSnackbarEvent(val message: String)
 }

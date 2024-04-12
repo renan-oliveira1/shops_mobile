@@ -58,11 +58,11 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideItemUseCases(repository: ItemRepository): ItemUseCases {
+    fun provideItemUseCases(repository: ItemRepository, bagRepository: BagRepository): ItemUseCases {
         return ItemUseCases(
             getItemsBag = GetItemsBag(repository),
             deleteItem = DeleteItem(repository),
-            addItem = AddItem(repository),
+            addItem = AddItem(repository, bagRepository),
             getItem = GetItem(repository)
         )
     }

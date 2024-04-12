@@ -13,5 +13,6 @@ data class Item(
     val quantity: Int,
     val price: Double,
     val bagId: Int
-){
-}
+)
+
+class InvalidItemException(message: String): Exception(message)

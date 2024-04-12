@@ -38,6 +38,7 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,6 +56,7 @@ import com.example.myshop.presentation.bag.bag_items.components.ItemInBag
 import com.example.myshop.presentation.util.Screen
 import com.example.myshop.ui.theme.Blue
 import com.example.myshop.ui.theme.BlueDarker
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,6 +78,11 @@ fun BagItemsScreen(
     var itemQuantity by remember { mutableStateOf("") }
     var idItemUpdate: Int? = null
 
+    LaunchedEffect(key1 = true){
+        bagItemsViewModel.showMessageSnackBar.collectLatest { event ->
+            scaffoldState.showSnackbar(message = event.message)
+        }
+    }
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = scaffoldState)},
@@ -194,7 +201,7 @@ fun BagItemsScreen(
                                 confirmButton = {
                                     Button(
                                         onClick = {
-                                            bagItemsViewModel.save(itemName, itemPrice, itemQuantity, idItemUpdate)
+                                            bagItemsViewModel.onEvent(ItemEvent.SaveItem(itemName, itemPrice, itemQuantity, idItemUpdate))
                                             itemName = ""
                                             itemPrice = ""
                                             itemQuantity = ""
