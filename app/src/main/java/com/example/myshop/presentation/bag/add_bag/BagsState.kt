@@ -4,6 +4,7 @@ import com.example.myshop.domain.model.Bag
 import com.example.myshop.domain.use_case.util.OrderType
 import com.example.myshop.domain.use_case.util.BagOrder
 
+// TODO: State to qhen implement order option
 data class BagsState(
     val shops: List<Bag> = emptyList(),
     val bagOrder: BagOrder = BagOrder.Date(OrderType.Descending),

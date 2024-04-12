@@ -46,14 +46,12 @@ class BagsViewModel @Inject constructor(
                     recentlyDeletedBag = null
                 }
             }
-
-        }
-    }
-
-    fun addBag(titleBag: String){
-        viewModelScope.launch {
-            bagUseCases.addBag(titleBag)
-            getBags(BagOrder.Date(OrderType.Descending))
+            is BagsEvent.SaveBag -> {
+                viewModelScope.launch {
+                    bagUseCases.addBag(event.title)
+                    getBags(BagOrder.Date(OrderType.Descending))
+                }
+            }
         }
     }
 

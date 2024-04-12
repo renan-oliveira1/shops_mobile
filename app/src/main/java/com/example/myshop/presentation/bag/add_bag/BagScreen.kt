@@ -114,7 +114,7 @@ fun BagScreen(
                 confirmButton = {
                     Button(
                         onClick = {
-                            viewModel.addBag(textValue)
+                            viewModel.onEvent(BagsEvent.SaveBag(textValue))
                             textValue = ""
                             showDialog = false
                         },

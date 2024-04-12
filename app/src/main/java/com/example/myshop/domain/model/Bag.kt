@@ -9,3 +9,5 @@ data class Bag(
     val title: String,
     val timestamp: Long
 )
+
+class InvalidBagException(message: String): Exception(message)
