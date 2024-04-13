@@ -86,7 +86,8 @@ fun BagScreen(
                         scope.launch {
                             val result = scaffoldState.showSnackbar(
                                 message = "Bag Deleted!",
-                                actionLabel = "Undo"
+                                actionLabel = "Undo",
+                                duration = SnackbarDuration.Short
                             )
                             if(result == SnackbarResult.ActionPerformed){
                                 viewModel.onEvent(BagsEvent.RestoreShop)
