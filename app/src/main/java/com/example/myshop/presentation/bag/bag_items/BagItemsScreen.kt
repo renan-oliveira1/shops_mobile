@@ -37,6 +37,8 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults.indicatorLine
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.LaunchedEffect
@@ -175,7 +177,13 @@ fun BagItemsScreen(
                                                     .padding(5.dp)
                                                     .background(Color.Transparent),
                                                 textStyle = TextStyle(color = Color.Black),
-                                                shape = RoundedCornerShape(30.dp)
+                                                shape = RoundedCornerShape(30.dp),
+                                                colors = TextFieldDefaults.textFieldColors(
+                                                    disabledTextColor = Color.Transparent,
+                                                    focusedIndicatorColor = Color.Transparent,
+                                                    unfocusedIndicatorColor = Color.Transparent,
+                                                    disabledIndicatorColor = Color.Transparent
+                                                )
                                             )
                                         }
                                         TextField(
@@ -186,7 +194,14 @@ fun BagItemsScreen(
                                                 keyboardType = KeyboardType.Number,
                                             ),
                                             modifier = Modifier.padding(5.dp),
-                                            shape = RoundedCornerShape(30.dp)
+                                            shape = RoundedCornerShape(30.dp),
+                                            colors = TextFieldDefaults.textFieldColors(
+                                                disabledTextColor = Color.Transparent,
+                                                focusedIndicatorColor = Color.Transparent,
+                                                unfocusedIndicatorColor = Color.Transparent,
+                                                disabledIndicatorColor = Color.Transparent
+                                            )
+
                                         )
                                         TextField(
                                             value = itemQuantity,
@@ -196,7 +211,13 @@ fun BagItemsScreen(
                                                 keyboardType = KeyboardType.Number,
                                             ),
                                             modifier = Modifier.padding(5.dp),
-                                            shape = RoundedCornerShape(30.dp)
+                                            shape = RoundedCornerShape(30.dp),
+                                            colors = TextFieldDefaults.textFieldColors(
+                                                disabledTextColor = Color.Transparent,
+                                                focusedIndicatorColor = Color.Transparent,
+                                                unfocusedIndicatorColor = Color.Transparent,
+                                                disabledIndicatorColor = Color.Transparent
+                                            )
                                         )
                                     }
                                 },
@@ -208,6 +229,7 @@ fun BagItemsScreen(
                                             itemPrice = ""
                                             itemQuantity = ""
                                             showDialog = false
+                                            idItemUpdate = null
                                         },
                                         colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = Color.White)
                                     ) {
@@ -218,6 +240,11 @@ fun BagItemsScreen(
                                     Button(
                                         onClick = {
                                             showDialog = false
+                                            itemName = ""
+                                            itemPrice = ""
+                                            itemQuantity = ""
+                                            showDialog = false
+                                            idItemUpdate = null
                                         },
                                         colors = ButtonDefaults.buttonColors(containerColor = Blue, contentColor = Color.White)
                                     ) {
