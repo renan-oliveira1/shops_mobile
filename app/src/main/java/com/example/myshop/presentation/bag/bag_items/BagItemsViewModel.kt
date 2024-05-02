@@ -81,7 +81,8 @@ class BagItemsViewModel @Inject constructor(
                 }
             }
             is ItemEvent.SaveItem -> {
-                val item = Item(name = itemEvent.name, price = itemEvent.price.toDouble(), quantity = itemEvent.quantity.toInt(), id = itemEvent.idItem, bagId =_stateBag.value!!.id!!)
+                val parseStringWithPoint = itemEvent.price.replace(",", ".")
+                val item = Item(name = itemEvent.name, price = parseStringWithPoint.toDouble(), quantity = itemEvent.quantity.toInt(), id = itemEvent.idItem, bagId =_stateBag.value!!.id!!)
                 viewModelScope.launch {
                     try{
                         itemsUseCases.addItem(item)
